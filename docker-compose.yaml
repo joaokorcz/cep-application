@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+#   app:
+#     build: .
+#     entrypoint: dockerize -wait tcp://postgres:5432 -timeout 40s ./.docker/entrypoint.sh
+#     container_name: cep-application
+#     ports:
+#       - 3000:3000
+#     volumes: 
+#       - .:/home/node/app
+#     depends_on:
+#       - postgres
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    tty: true
+    volumes:
+      - ./.docker/dbdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=masterkey
+      - POSTGRES_DB=cep
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    tty: true
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@cep.com
+      - PGADMIN_DEFAULT_PASSWORD=123456
+    ports:
+      - 9000:80
