@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { CepModule } from './cep/cep.module';
 
 @Module({
-    imports: [],
+    imports: [CepModule],
     controllers: [],
     providers: [],
 })
