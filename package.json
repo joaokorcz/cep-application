@@ -25,6 +25,7 @@
         "@nestjs/core": "^9.0.0",
         "@nestjs/mapped-types": "*",
         "@nestjs/platform-express": "^9.0.0",
+        "@nestjs/swagger": "^6.1.2",
         "@prisma/client": "4.4.0",
         "brazilian-class-validator": "^0.1.6",
         "brazilian-values": "^0.12.0",
