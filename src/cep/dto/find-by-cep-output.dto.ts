@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
 
 class FoundCity {
     @ApiProperty()
@@ -11,6 +12,9 @@ class FoundState {
 }
 
 export class FindByCepOutputDto {
+    @ApiProperty()
+    code: string;
+
     @ApiProperty()
     address: string;
 

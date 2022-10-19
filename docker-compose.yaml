@@ -17,13 +17,13 @@ services:
     container_name: postgres
     restart: always
     tty: true
-    volumes:
-      - ./.docker/dbdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=masterkey
       - POSTGRES_DB=cep
     ports:
       - 5432:5432
+    volumes:
+      - ./.docker/dbdata:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4
@@ -34,3 +34,12 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=123456
     ports:
       - 9000:80
+
+  cache:
+    image: redis:7.0-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes: 
+      - ./.docker/cache:/data
