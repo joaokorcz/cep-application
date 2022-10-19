@@ -13,7 +13,6 @@ import {
     ApiOperation,
     ApiTags,
 } from '@nestjs/swagger';
-import { plainToClass } from 'class-transformer';
 import { CepService } from './cep.service';
 import { FindByCepInputDto } from './dto/find-by-cep-input.dto';
 import { FindByCepOutputDto } from './dto/find-by-cep-output.dto';
