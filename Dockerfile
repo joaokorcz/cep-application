@@ -1,11 +1,11 @@
-FROM node:16.17.1-alpine AS build
+FROM node:16.8.0-alpine AS build
 COPY . .
 RUN apk add --no-cache git && \
     yarn install && \
     yarn prisma generate && \
     yarn build
 
-FROM node:16.17.1-alpine
+FROM node:16.18.0-alpine
 
 WORKDIR /home/node/app
 
