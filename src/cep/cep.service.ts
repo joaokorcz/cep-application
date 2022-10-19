@@ -21,12 +21,7 @@ export class CepService {
             ...this.replaceNonZeroWithZero(cep_code),
         ];
 
-        const found_on_cache = await this.searchFirstAddressOnCacheByCepArray(
-            possible_ceps,
-        );
-        if (found_on_cache) return found_on_cache;
-
-        const ceps_found = await this.prismaService.cep.findMany({
+        const found_ceps = await this.prismaService.cep.findMany({
             where: {
                 code: {
                     in: possible_ceps,
@@ -34,37 +29,33 @@ export class CepService {
             },
             select: {
                 code: true,
-                address: true,
-                neighborhood: true,
-                city: { select: { name: true } },
-                state: { select: { name: true } },
             },
         });
 
-        for await (const cep_found of ceps_found) {
-            await this.cacheManager.set(cep_found.code, cep_found);
-        }
-
         for (const cep of possible_ceps) {
-            const found = ceps_found.find(
+            const found = found_ceps.find(
                 (cep_found) => cep_found.code === cep,
             );
-            if (found) return found;
+            if (found) {
+                const address = await this.prismaService.cep.findUnique({
+                    where: {
+                        code: found.code,
+                    },
+                    select: {
+                        code: true,
+                        address: true,
+                        neighborhood: true,
+                        city: { select: { name: true } },
+                        state: { select: { name: true } },
+                    },
+                });
+                return address;
+            }
         }
 
         throw new NotFoundException({
             message: 'cep not found on database',
         });
-    }
-
-    async searchFirstAddressOnCacheByCepArray(
-        keys: string[],
-    ): Promise<FindByCepOutputDto> {
-        for await (const key of keys) {
-            const value: FindByCepOutputDto = await this.cacheManager.get(key);
-
-            if (value) return value;
-        }
     }
 
     replaceNonZeroWithZero(cep_code: string): string[] {
