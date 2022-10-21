@@ -8,9 +8,6 @@ export class CreateUserOutputDto {
     email: string;
 
     @ApiProperty()
-    password: string;
-
-    @ApiProperty()
     created_at: Date;
 
     @ApiProperty()

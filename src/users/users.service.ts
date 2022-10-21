@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import { CreateUserInputDto } from './dto/create-user-input.dto';
@@ -7,7 +8,7 @@ import { CreateUserOutputDto } from './dto/create-user-output.dto';
 export class UsersService {
     constructor(private readonly prismaService: PrismaService) {}
 
-    async getByEmail(email: string) {
+    async findByEmail(email: string) {
         return this.prismaService.user.findFirst({
             where: {
                 email: email,
@@ -17,9 +18,9 @@ export class UsersService {
     }
 
     async create(
-        createUserInput: CreateUserInputDto,
+        create_user_input: CreateUserInputDto,
     ): Promise<CreateUserOutputDto> {
-        const user_exists = await this.getByEmail(createUserInput.email);
+        const user_exists = await this.findByEmail(create_user_input.email);
 
         if (user_exists) {
             throw new UnprocessableEntityException({
@@ -27,8 +28,20 @@ export class UsersService {
             });
         }
 
+        const salt = bcrypt.genSaltSync(10);
+
         const created_user = await this.prismaService.user.create({
-            data: createUserInput,
+            data: {
+                ...create_user_input,
+                password: bcrypt.hashSync(create_user_input.password, salt),
+            },
+            select: {
+                id: true,
+                email: true,
+                created_at: true,
+                updated_at: true,
+                deleted_at: true,
+            },
         });
 
         return created_user;

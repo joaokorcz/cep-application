@@ -27,7 +27,7 @@ export class UsersController {
     @ApiOkResponse({ description: 'User created', type: CreateUserOutputDto })
     @ApiBadRequestResponse({ description: 'Validation failed' })
     @ApiUnprocessableEntityResponse({ description: 'Email already registered' })
-    async create(@Body() createUserInput: CreateUserInputDto) {
-        return this.usersService.create(createUserInput);
+    async create(@Body() create_user_input: CreateUserInputDto) {
+        return this.usersService.create(create_user_input);
     }
 }

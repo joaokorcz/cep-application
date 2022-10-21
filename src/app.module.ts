@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from 'nestjs-prisma';
 import { CepModule } from './cep/cep.module';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
@@ -25,6 +26,7 @@ import { UsersModule } from './users/users.module';
         PrismaModule.forRoot({ isGlobal: true }),
         CepModule,
         UsersModule,
+        AuthModule,
     ],
     controllers: [],
     providers: [],
