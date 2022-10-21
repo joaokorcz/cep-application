@@ -1,11 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsCEP } from 'brazilian-class-validator';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
+import { IsCEP } from '../../validators/IsCEP';
 
 export class FindByCepInputDto {
-    @IsString()
     @IsNotEmpty()
-    @IsCEP({ message: 'CEP inválido' })
+    @IsCEP({ message: 'CEP informado é inválido' })
     @ApiProperty({
         description: 'CEP Code that you want address',
     })
