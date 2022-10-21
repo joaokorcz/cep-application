@@ -1,7 +1,9 @@
 import {
+    CacheInterceptor,
     Controller,
     Get,
     Param,
+    UseInterceptors,
     UsePipes,
     ValidationPipe,
 } from '@nestjs/common';
@@ -17,6 +19,7 @@ import { FindByCepOutputDto } from './dto/find-by-cep-output.dto';
 
 @ApiTags('CEP')
 @Controller('cep')
+@UseInterceptors(CacheInterceptor)
 export class CepController {
     constructor(private readonly cepService: CepService) {}
 
@@ -25,9 +28,11 @@ export class CepController {
     @ApiOperation({ description: 'Get address from cep_code' })
     @ApiOkResponse({ description: 'Address found', type: FindByCepOutputDto })
     @ApiBadRequestResponse({ description: 'Informed cep_code not valid' })
-    findByCepCode(
+    async findByCepCode(
         @Param() params: FindByCepInputDto,
     ): Promise<FindByCepOutputDto> {
+        console.log('Controller');
+
         return this.cepService.findByCepCode(params.cep_code);
     }
 }

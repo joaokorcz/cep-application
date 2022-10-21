@@ -16,7 +16,10 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document, {
         customSiteTitle: 'CEP-Application docs',
-        swaggerOptions: { defaultModelsExpandDepth: -1 },
+        swaggerOptions: {
+            defaultModelsExpandDepth: -1,
+            displayRequestDuration: true,
+        },
     });
 
     await app.listen(configService.get('PORT'));

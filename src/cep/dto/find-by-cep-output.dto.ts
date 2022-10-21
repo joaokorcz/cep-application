@@ -12,6 +12,9 @@ class FoundState {
 
 export class FindByCepOutputDto {
     @ApiProperty()
+    code: string;
+
+    @ApiProperty()
     address: string;
 
     @ApiProperty()
