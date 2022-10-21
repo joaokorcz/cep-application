@@ -1,5 +1,7 @@
 import { CacheModule, Module } from '@nestjs/common';
 import { redisStore } from 'cache-manager-redis-store';
+import { ConfigModule } from '@nestjs/config';
+import { PrismaModule } from 'nestjs-prisma';
 import { CepModule } from './cep/cep.module';
 
 @Module({
@@ -18,6 +20,8 @@ import { CepModule } from './cep/cep.module';
             isGlobal: true,
             max: 1000,
         }),
+        ConfigModule.forRoot({ isGlobal: true }),
+        PrismaModule.forRoot({ isGlobal: true }),
         CepModule,
     ],
     controllers: [],

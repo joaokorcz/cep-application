@@ -5,8 +5,8 @@ import {
     NotFoundException,
 } from '@nestjs/common';
 import { Cache } from 'cache-manager';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { FindByCepOutputDto } from './dto/find-by-cep-output.dto';
+import { PrismaService } from 'nestjs-prisma';
 
 @Injectable()
 export class CepService {

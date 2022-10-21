@@ -1,0 +1,13 @@
+.vscode
+test
+
+.git
+node_modules
+
+*.md
+*.yml
+.gitignore
+.prettierrc
+Dockerfile
+docker-compose.yaml
+.docker
