@@ -104,5 +104,7 @@ dist
 .tern-port
 
 # Custom
-dataset
 .docker
+dataset/states
+dataset/cities
+dataset/ceps
