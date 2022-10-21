@@ -1,23 +1,24 @@
-FROM node:16.17.1-alpine AS build
+FROM node:16.18-alpine AS build
+
+WORKDIR /app
+
+COPY package.json ./
+COPY yarn.lock ./
+COPY prisma ./prisma/
+
+RUN yarn install
+
 COPY . .
-RUN apk add --no-cache git && \
-    yarn install && \
-    yarn prisma generate && \
-    yarn build
 
-FROM node:16.17.1-alpine
+RUN yarn build
 
-WORKDIR /home/node/app
+###
 
-COPY package.json yarn.lock ./
-RUN apk add --no-cache git && \
-    yarn install --production && yarn cache clean &&\
-    apk del git
-COPY --from=build prisma/schema.prisma prisma/schema.prisma
-COPY --from=build prisma/migrations prisma/migrations
-COPY --from=build node_modules/.prisma node_modules/.prisma
-COPY --from=build dist dist
+FROM node:16.18-alpine
 
-USER node
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/package*.json ./
+COPY --from=build /app/dist ./dist
 
-CMD [ "node", "dist/src/main" ]
+EXPOSE 3000
+CMD [ "node", "dist/main.js" ]
