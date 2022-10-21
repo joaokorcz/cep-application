@@ -38,7 +38,7 @@ services:
     ports:
       - 9000:80
 
-  cache:
+  redis:
     image: redis:7.0-alpine
     restart: always
     ports:
