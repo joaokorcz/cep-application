@@ -10,6 +10,7 @@ services:
       - 3000:3000
     depends_on:
       - postgres
+      - redis
     env_file:
       - .env
     volumes: 
