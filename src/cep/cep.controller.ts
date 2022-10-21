@@ -31,8 +31,6 @@ export class CepController {
     async findByCepCode(
         @Param() params: FindByCepInputDto,
     ): Promise<FindByCepOutputDto> {
-        console.log('Controller');
-
         return this.cepService.findByCepCode(params.cep_code);
     }
 }
