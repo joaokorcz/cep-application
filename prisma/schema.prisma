@@ -43,3 +43,16 @@ model Cep {
 
   @@map("ceps")
 }
+
+model User {
+  id         String    @id @default(uuid()) @db.Uuid
+
+  email    String @db.Text
+  password String @db.Text
+
+  created_at DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at DateTime  @default(now()) @updatedAt @db.Timestamptz(6)
+  deleted_at DateTime? @db.Timestamptz(6)
+
+  @@map("users")
+}
