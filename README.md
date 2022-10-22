@@ -64,8 +64,8 @@ git clone https://github.com/joaokorcz/cep-application
 # Entrar no diretório criado
 cd cep-application
 
-# Criar um arquivo de variáveis de ambiente
-# Copiar a prórpria .env.example já promete funcionar
+# Criar um arquivo de variáveis de ambiente e preenchê-la
+# Copiar a própria .env.example já promete funcionar
 cp .env.example .env
 
 # Entrar no dirétorio dataset
@@ -92,6 +92,8 @@ docker-compose run --rm cep-application yarn prisma migrate deploy
 
 # Para preencher as tabelas de estados, cidades e ceps
 docker-compose run --rm cep-application yarn db:fill_ceps
+
+# A aplicatação já deve estar no ar!
 ```
 
 ## Sobre a consulta no banco de dados
