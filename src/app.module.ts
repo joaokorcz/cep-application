@@ -3,6 +3,7 @@ import { redisStore } from 'cache-manager-redis-store';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from 'nestjs-prisma';
 import { CepModule } from './cep/cep.module';
+import { AppController } from './app.controller';
 
 @Module({
     imports: [
@@ -24,7 +25,7 @@ import { CepModule } from './cep/cep.module';
         PrismaModule.forRoot({ isGlobal: true }),
         CepModule,
     ],
-    controllers: [],
+    controllers: [AppController],
     providers: [],
 })
 export class AppModule {}
