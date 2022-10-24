@@ -17,6 +17,7 @@
   - Banco de dados em memória usado como serviço de cache para requisições.
 - Jest e Supertest
   - Usados para o ambiente de desenvolvimento dos testes como mock dos dados e funções, requisições http de testes e comparação de resultados.
+  - Os testes foram implementados apenas para o service e rota de cep, desprotegida, visto que minha última atenção foi a criação de usuários e autenticação, até então elas não existiam e portanto os únicos testes cabiam a busca de ceps.
 - Swagger e OpenAPI
   - Usado para documentar as rotas expostas pela aplicação.
     - Acesso com a rota padrão `/api`
