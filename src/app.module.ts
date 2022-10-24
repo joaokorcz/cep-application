@@ -5,6 +5,7 @@ import { PrismaModule } from 'nestjs-prisma';
 import { CepModule } from './cep/cep.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { AppController } from './app.controller';
 
 @Module({
     imports: [
@@ -28,7 +29,7 @@ import { AuthModule } from './auth/auth.module';
         UsersModule,
         AuthModule,
     ],
-    controllers: [],
+    controllers: [AppController],
     providers: [],
 })
 export class AppModule {}

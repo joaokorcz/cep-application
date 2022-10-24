@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -22,6 +23,14 @@ async function bootstrap() {
         },
     });
 
-    await app.listen(configService.get('PORT'));
+    await app
+        .listen(configService.get('PORT'))
+        .then(() =>
+            Logger.log(
+                `cep-application listening on port ${configService.get(
+                    'PORT',
+                )}, http://localhost:${configService.get('PORT')}`,
+            ),
+        );
 }
 bootstrap();
