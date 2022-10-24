@@ -15,12 +15,6 @@
 - Swagger e OpenAPI
   - Usado para documentar as rotas expostas pela aplicação.
     - Acesso com a rota padrão `/api`
-- PgAdmin
-  - Utilizado para visualização e facilidade na interação com o banco de dados.
-    - Para acesso utilizar a url [localhost:9000](http://localhost:9000)
-      - Para login
-        - usuário: admin@cep.com
-        - senha: 123456
 - Docker e docker-compose
   - Utilizado para "conteinerizar" a aplicação e fornecer outras ferramentas necessárias que podem ser trabalhosas de instalar e manusear versões.
   
