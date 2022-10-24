@@ -29,7 +29,7 @@ export class AuthService {
         const user = await this.validateCredentials(email, password);
 
         const payload = {
-            id: user.id,
+            user_id: user.id,
         };
 
         return {

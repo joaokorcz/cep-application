@@ -12,4 +12,8 @@ export class JwtStrategyService extends PassportStrategy(Strategy, 'jwt') {
             secretOrKey: configService.get('JWT_SECRET') || 'super_secret',
         });
     }
+
+    async validate(payload: any) {
+        return { user_id: payload.user_id };
+    }
 }
