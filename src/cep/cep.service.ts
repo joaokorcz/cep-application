@@ -1,19 +1,10 @@
-import {
-    CACHE_MANAGER,
-    Inject,
-    Injectable,
-    NotFoundException,
-} from '@nestjs/common';
-import { Cache } from 'cache-manager';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { FindByCepOutputDto } from './dto/find-by-cep-output.dto';
 import { PrismaService } from 'nestjs-prisma';
 
 @Injectable()
 export class CepService {
-    constructor(
-        @Inject(CACHE_MANAGER) private cacheManager: Cache,
-        private readonly prismaService: PrismaService,
-    ) {}
+    constructor(private readonly prismaService: PrismaService) {}
 
     async findByCepCode(cep_code: string): Promise<FindByCepOutputDto> {
         const possible_ceps = [
@@ -49,7 +40,12 @@ export class CepService {
                         state: { select: { name: true } },
                     },
                 });
-                return address;
+                const { code, ...parsed_address } = address;
+                return {
+                    informed_code: cep_code,
+                    code_found: code,
+                    ...parsed_address,
+                };
             }
         }
 
