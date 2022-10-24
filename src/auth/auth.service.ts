@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import { LoginInputDto } from './dto/login-input.dto';
 import { JwtService } from '@nestjs/jwt';
 
@@ -23,8 +23,8 @@ export class AuthService {
         return user;
     }
 
-    async login(login_input_dto: LoginInputDto) {
-        const { email, password } = login_input_dto;
+    async login(login_input: LoginInputDto) {
+        const { email, password } = login_input;
 
         const user = await this.validateCredentials(email, password);
 

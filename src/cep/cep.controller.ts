@@ -33,9 +33,9 @@ export class CepController {
     @ApiOkResponse({ description: 'Address found', type: FindByCepOutputDto })
     @ApiBadRequestResponse({ description: 'Informed cep_code not valid' })
     async findByCepCode(
-        @Param() params: FindByCepInputDto,
+        @Param() find_by_cep_input: FindByCepInputDto,
     ): Promise<FindByCepOutputDto> {
-        return this.cepService.findByCepCode(params.cep_code);
+        return this.cepService.findByCepCode(find_by_cep_input);
     }
 
     @Get('/protected/:cep_code')
@@ -47,8 +47,8 @@ export class CepController {
     @ApiBadRequestResponse({ description: 'Informed cep_code not valid' })
     @ApiUnauthorizedResponse({ description: 'Unauthorized, token invalid' })
     async protectedFindByCepCode(
-        @Param() params: FindByCepInputDto,
+        @Param() find_by_cep_input: FindByCepInputDto,
     ): Promise<FindByCepOutputDto> {
-        return this.cepService.findByCepCode(params.cep_code);
+        return this.cepService.findByCepCode(find_by_cep_input);
     }
 }

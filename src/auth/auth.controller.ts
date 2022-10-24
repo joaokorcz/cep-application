@@ -32,9 +32,7 @@ export class AuthController {
     @ApiForbiddenResponse({
         description: 'User with informed credentials not found',
     })
-    async login(
-        @Body() login_input_dto: LoginInputDto,
-    ): Promise<LoginOutputDto> {
-        return this.authService.login(login_input_dto);
+    async login(@Body() login_input: LoginInputDto): Promise<LoginOutputDto> {
+        return this.authService.login(login_input);
     }
 }
