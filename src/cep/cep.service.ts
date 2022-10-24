@@ -1,12 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { FindByCepOutputDto } from './dto/find-by-cep-output.dto';
 import { PrismaService } from 'nestjs-prisma';
+import { FindByCepInputDto } from './dto/find-by-cep-input.dto';
 
 @Injectable()
 export class CepService {
     constructor(private readonly prismaService: PrismaService) {}
 
-    async findByCepCode(cep_code: string): Promise<FindByCepOutputDto> {
+    async findByCepCode(
+        find_by_cep_input: FindByCepInputDto,
+    ): Promise<FindByCepOutputDto> {
+        const { cep_code } = find_by_cep_input;
         const possible_ceps = [
             cep_code,
             ...this.replaceNonZeroWithZero(cep_code),

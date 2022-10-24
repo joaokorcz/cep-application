@@ -17,9 +17,15 @@
   - Banco de dados em memória usado como serviço de cache para requisições.
 - Jest e Supertest
   - Usados para o ambiente de desenvolvimento dos testes como mock dos dados e funções, requisições http de testes e comparação de resultados.
+  - Os testes foram implementados apenas para o service e rota de cep, desprotegida, visto que minha última atenção foi a criação de usuários e autenticação, até então elas não existiam e portanto os únicos testes cabiam a busca de ceps.
 - Swagger e OpenAPI
   - Usado para documentar as rotas expostas pela aplicação.
     - Acesso com a rota padrão `/api`
+- JWT
+  - Para autenticação da api.
+    - Para fins de demonstração apenas... estão expostas duas rotas para consulta de cep:
+      - `desprotegida` /cep/:cep_code
+      - `protegida` /cep/protected/:cep_code
 - Docker e docker-compose
   - Utilizado para "conteinerizar" a aplicação e fornecer outras ferramentas necessárias que podem ser trabalhosas de instalar e manusear versões.
   
@@ -55,6 +61,26 @@
   - para
     - ![image](https://user-images.githubusercontent.com/37910255/197310514-cb59fdb6-02ea-4e21-bb17-9003625521ea.png)
 
+## Para a autenticação
+- É necessário criar um usuário com o método `POST` para `/users`
+```json
+{
+  "email": "exemplo@email.com", // é obrigatório e deve ser um e-mail válido
+  "password": "12345678"        // é obrigatório e deve possuir tamanho >= 8
+}
+```
+- E logar na rota `/auth` também método `POST`
+```json
+{
+  "email": "exemplo@email.com", // é obrigatório e deve ser um e-mail válido
+  "password": "12345678"        // é obrigatório e deve possuir tamanho >= 8
+}
+```
+- A única rota protegida que requer autenticação por Bearer Token é a /cep/protected/:cep_code
+  - Se utilizar o swagger, ele já fornece na interface o local para inserir o token
+    - Caso contrário ele é obrigatório nos headers da requisição com o nome `Authorization`
+      - Ao colocar manualmente (por fora do swagger) lembre-se de acrescentar `Bearer` antes do token
+
 ## Para rodar a aplicação
 ```bash
 # Clonar o repositório
@@ -85,12 +111,15 @@ docker-compose build
 docker-compose run --rm app yarn prisma migrate deploy
 
 # Para preencher as tabelas de estados, cidades e ceps
+# Cerca de 35 segundos
 docker-compose run --rm app yarn db:fill_ceps
 
 # Para rodar os testes unitários de CepService
 docker-compose run --rm app yarn test
 
 # Para rodar os testes e2e do endpoint / e /cep
+# Estes testes requerem os dados no banco
+# Inseridos com o comando docker-compose run --rm app yarn db:fill_ceps
 docker-compose run --rm app yarn test:e2e
 
 # Para subir toda a aplicação

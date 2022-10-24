@@ -45,7 +45,7 @@ describe('CepService', () => {
             state: { name: 'Paraná' },
         });
 
-        expect(await service.findByCepCode('87340000')).toEqual({
+        expect(await service.findByCepCode({ cep_code: '87340000' })).toEqual({
             informed_code: '87340000',
             code_found: '87340000',
             address: null,
@@ -73,7 +73,7 @@ describe('CepService', () => {
             state: { name: 'São Paulo' },
         });
 
-        expect(await service.findByCepCode('13566572')).toEqual({
+        expect(await service.findByCepCode({ cep_code: '13566572' })).toEqual({
             informed_code: '13566572',
             code_found: '13566570',
             address: expect.any(String),
@@ -87,14 +87,16 @@ describe('CepService', () => {
 
     it('should return a not found exception with message', async () => {
         expect(
-            await service.findByCepCode('13500000').catch((error) => {
-                expect(mockPrismaService.cep.findMany).toBeCalledTimes(1);
-                expect(mockPrismaService.cep.findUnique).toBeCalledTimes(0);
-                expect(error).toBeInstanceOf(NotFoundException);
-                expect(error.response).toEqual({
-                    message: 'cep not found on database',
-                });
-            }),
+            await service
+                .findByCepCode({ cep_code: '13500000' })
+                .catch((error) => {
+                    expect(mockPrismaService.cep.findMany).toBeCalledTimes(1);
+                    expect(mockPrismaService.cep.findUnique).toBeCalledTimes(0);
+                    expect(error).toBeInstanceOf(NotFoundException);
+                    expect(error.response).toEqual({
+                        message: 'cep not found on database',
+                    });
+                }),
         );
     });
 
@@ -102,14 +104,16 @@ describe('CepService', () => {
         // the function should run normally since the parse and validation
         // are done in other layers
         expect(
-            await service.findByCepCode('1a3b5c6d0e0f0g0h').catch((error) => {
-                expect(mockPrismaService.cep.findMany).toBeCalledTimes(1);
-                expect(mockPrismaService.cep.findUnique).toBeCalledTimes(0);
-                expect(error).toBeInstanceOf(NotFoundException);
-                expect(error.response).toEqual({
-                    message: 'cep not found on database',
-                });
-            }),
+            await service
+                .findByCepCode({ cep_code: '1a3b5c6d0e0f0g0h' })
+                .catch((error) => {
+                    expect(mockPrismaService.cep.findMany).toBeCalledTimes(1);
+                    expect(mockPrismaService.cep.findUnique).toBeCalledTimes(0);
+                    expect(error).toBeInstanceOf(NotFoundException);
+                    expect(error.response).toEqual({
+                        message: 'cep not found on database',
+                    });
+                }),
         );
     });
 });
