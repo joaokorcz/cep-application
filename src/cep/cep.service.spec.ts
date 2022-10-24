@@ -39,7 +39,7 @@ describe('CepService', () => {
             .mockReturnValue([{ code: '87340000' }]);
         mockPrismaService.cep.findUnique = jest.fn().mockReturnValue({
             code: '87340000',
-            address: 'Avenida Manoel Francisco da Silva',
+            address: null,
             neighborhood: null,
             city: { name: 'Mamborê' },
             state: { name: 'Paraná' },
@@ -48,7 +48,7 @@ describe('CepService', () => {
         expect(await service.findByCepCode('87340000')).toEqual({
             informed_code: '87340000',
             code_found: '87340000',
-            address: expect.any(String),
+            address: null,
             neighborhood: null,
             city: expect.objectContaining({ name: expect.any(String) }),
             state: expect.objectContaining({ name: expect.any(String) }),
