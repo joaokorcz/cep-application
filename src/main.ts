@@ -13,6 +13,7 @@ async function bootstrap() {
         .setTitle('CEP-Application')
         .setDescription('Endpoints documentation of cep-applications')
         .setVersion('1.0')
+        .addBearerAuth()
         .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document, {
