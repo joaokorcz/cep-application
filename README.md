@@ -111,12 +111,15 @@ docker-compose build
 docker-compose run --rm app yarn prisma migrate deploy
 
 # Para preencher as tabelas de estados, cidades e ceps
+# Cerca de 35 segundos
 docker-compose run --rm app yarn db:fill_ceps
 
 # Para rodar os testes unitários de CepService
 docker-compose run --rm app yarn test
 
 # Para rodar os testes e2e do endpoint / e /cep
+# Estes testes requerem os dados no banco
+# Inseridos com o comando docker-compose run --rm app yarn db:fill_ceps
 docker-compose run --rm app yarn test:e2e
 
 # Para subir toda a aplicação
