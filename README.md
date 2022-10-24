@@ -20,6 +20,11 @@
 - Swagger e OpenAPI
   - Usado para documentar as rotas expostas pela aplicação.
     - Acesso com a rota padrão `/api`
+- JWT
+  - Para autenticação da api.
+    - Para fins de demonstração apenas... estão expostas duas rotas para consulta de cep:
+      - `desprotegida` /cep/:cep_code
+      - `protegida` /cep/protected/:cep_code
 - Docker e docker-compose
   - Utilizado para "conteinerizar" a aplicação e fornecer outras ferramentas necessárias que podem ser trabalhosas de instalar e manusear versões.
   
@@ -54,6 +59,26 @@
     - ![image](https://user-images.githubusercontent.com/37910255/197310430-fb81a38f-22a8-460a-8e48-a0cc9a3b2bae.png)
   - para
     - ![image](https://user-images.githubusercontent.com/37910255/197310514-cb59fdb6-02ea-4e21-bb17-9003625521ea.png)
+
+## Para a autenticação
+- É necessário criar um usuário com o método `POST` para `/users`
+```json
+{
+  "email": "exemplo@email.com", // é obrigatório e deve ser um e-mail válido
+  "password": "12345678"        // é obrigatório e deve possuir tamanho >= 8
+}
+```
+- E logar na rota `/auth` também método `POST`
+```json
+{
+  "email": "exemplo@email.com", // é obrigatório e deve ser um e-mail válido
+  "password": "12345678"        // é obrigatório e deve possuir tamanho >= 8
+}
+```
+- A única rota protegida que requer autenticação por Bearer Token é a /cep/protected/:cep_code
+  - Se utilizar o swagger, ele já fornece na interface o local para inserir o token
+    - Caso contrário ele é obrigatório nos headers da requisição com o nome `Authorization`
+      - Ao colocar manualmente (por fora do swagger) lembre-se de acrescentar `Bearer` antes do token
 
 ## Para rodar a aplicação
 ```bash
