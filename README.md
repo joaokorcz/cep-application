@@ -2,16 +2,21 @@
 
 > API to provide address information
 
+## Escolha da linguagem e arquitetura
+- Escolhi utilizar NodeJs, implementando com a linguagem TypeScript em cima do framework NestJs. O principal motivo dessa escolha é a familiaridade com esta linguagem, seus padrões e ferramentas, sendo ela a que mais possuo tempo de experiência profissional. A arquitetura escolhida foi MVC minimalista, na qual os controllers estão definidos expondo as rotas e "lidando" apenas com a recepção das requisições e a devolução das respostas, então faz chamadas à uma camada Service que possui interação com o banco de dados, faz o que precisa ser feito e retorna um objeto de resposta ou levanta exceções. Os DTOs também estão definidos com intuito de validar os dados na entrada e representarem a saída.
+
 ## Tecnologias usadas
 
 - NestJs
-  - Framework escolhido por prover uma série de integrações entre diferentes serviços como Redis, Swagger com OpenAPI, Jest e SuperTest e, por apresentar a exposição de rotas com facilidade, coisa que poderia ser feita com qualquer framework.
+  - Framework escolhido por prover uma série de integrações entre diferentes serviços como Redis, Swagger com OpenAPI, Jest e SuperTest e, por apresentar a exposição de rotas com facilidade e ter o fluxo de execução bem nítido.
 - Postgres
   - Banco de dados escolhido para armazenar os dados. Estados, cidades e ceps.
 - Prisma
   - "ORM" escolhido para interação entre o typescript/ nestjs e o banco de dados.
 - Redis
   - Banco de dados em memória usado como serviço de cache para requisições.
+- Jest e Supertest
+  - Usados para o ambiente de desenvolvimento dos testes como mock dos dados e funções, requisições http de testes e comparação de resultados.
 - Swagger e OpenAPI
   - Usado para documentar as rotas expostas pela aplicação.
     - Acesso com a rota padrão `/api`
@@ -73,20 +78,30 @@ cd dataset
 # Voltar para a raiz
 cd ..
 
-# Inicializar o docker-compose que será responsável por
-# A instância da aplicacação disponível na PORT da .env
-# A instância do postgres para servir o banco de dados
-# A instância do regis para servir o cache
-docker-compose up # em um segundo terminal ou
-docker-compose up -d
+# Buildar o docker-compose
+docker-compose build
 
 # Rodar as migrações das tabelas do banco de dados
-docker-compose run --rm cep-application yarn prisma migrate deploy
+docker-compose run --rm app yarn prisma migrate deploy
 
 # Para preencher as tabelas de estados, cidades e ceps
-docker-compose run --rm cep-application yarn db:fill_ceps
+docker-compose run --rm app yarn db:fill_ceps
 
-# A aplicatação já deve estar no ar!
+# Para rodar os testes unitários de CepService
+docker-compose run --rm app yarn test
+
+# Para rodar os testes e2e do endpoint / e /cep
+docker-compose run --rm app yarn test:e2e
+
+# Para subir toda a aplicação
+# Inicializar o docker-compose que será responsável pela
+# Instância da aplicacação disponível na PORT da .env
+# Instância do postgres para servir o banco de dados
+# Instância do redis para servir o armazenamento em cache
+docker-compose up # ou
+docker-compose up -d
+
+# A aplicação já deve estar no ar!
 ```
 
 ## Sobre a consulta no banco de dados
