@@ -77,7 +77,6 @@ cd ..
 # A instância da aplicacação disponível na PORT da .env
 # A instância do postgres para servir o banco de dados
 # A instância do regis para servir o cache
-# A instância do pgadmin para visualização dos dados
 docker-compose up # em um segundo terminal ou
 docker-compose up -d
 
